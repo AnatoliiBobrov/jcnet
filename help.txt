@@ -1,15 +1,21 @@
 Module.java
-	backward
-	calculate
+	backward()
+	calculate()
+	previousModule
+	nextModule
 	
 Net.java (module)
-
+	
 layers
 	/FullуConnected (module)
 
 functions
 	/Sigmoid (module)
 	/ReLU (module)
+
+optimizers
+	/SGD
+	/Adam
 
 
 

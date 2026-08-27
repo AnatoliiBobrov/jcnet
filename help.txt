@@ -1,0 +1,16 @@
+Module.java
+	backward
+	calculate
+	
+Net.java (module)
+
+layers
+	/FullуConnected (module)
+
+functions
+	/Sigmoid (module)
+	/ReLU (module)
+
+
+
+	

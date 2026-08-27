@@ -7,9 +7,10 @@ Module.java
 	
 Variable.java
 	value
-	gradient
+	gradient /hidden
 	backward()
-	
+	generation /hidden
+	tree /hidden tree in cloud
 	
 	
 Net.java (module)
@@ -19,7 +20,6 @@ Net.java (module)
 layers
 	/FullуConnected (module)
 		parameters()
-
 
 functions
 	/Sigmoid (module)

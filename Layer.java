@@ -7,7 +7,7 @@ public class Layer{
 
     public float Output(float[] _input){
         input = _input;
-
+        
     }
 
 }

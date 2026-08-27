@@ -1,17 +1,22 @@
-package java.jcnet;
+package jcnet;
 public class Module{
     
 
-    public float Output(float[] _input){
-        return 0F;
+    public void backward(){
+        return ;
     }
 
+	public Variable[] calculate(){
+        return None;
+    }
+
+	public Variable[] parameters(){
+        return None;
+    }
 }
 /*
  * Module.java
 	backward()
 	calculate()
-	previousModules
-	nextModules
 	parameters
  */

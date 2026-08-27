@@ -1,13 +1,25 @@
 Module.java
 	backward()
 	calculate()
-	previousModule
-	nextModule
+	previousModules
+	nextModules
+	parameters
+	
+Variable.java
+	value
+	gradient
+	backward()
+	
+	
 	
 Net.java (module)
+	parameters()
+	create(list of modules)
 	
 layers
 	/FullуConnected (module)
+		parameters()
+
 
 functions
 	/Sigmoid (module)
@@ -15,8 +27,13 @@ functions
 
 optimizers
 	/SGD
-	/Adam
+		zero_grad()
+	/Adam 
 
+loss
+	/MSELoss (module)
+	/BCELoss (module)
+		
 
 
 	

@@ -13,6 +13,20 @@ public class GradTree {
 	protected void add(Variable variable) {
 		_variables.add(variable);
 	}
+
+	protected void zeroGrad() {
+		for (Variable variable : _variables) {
+			variable.zeroGradFromTree();
+			}
+		}
+	}
+
+	protected void backward() {
+		for (Variable variable : _variables.reversed()) {
+			variable.backward();
+			}
+		}
+	}
 }
 /*
  * Variable.java

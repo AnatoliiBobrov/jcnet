@@ -1,4 +1,8 @@
 package jcnet;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Variable {
     private float _value;
 	private float _gradiend;
@@ -17,13 +21,18 @@ public class Variable {
 		return _generation;	
 	}
 
-	public void zeroGrad() {
+	protected void zeroGradFromTree() {
 		_gradiend = 0;
 		_value = 0;
 		_generation = -1;
 		_gradTree = None;
 	}
 
+
+	public void zeroGrad() {
+		_gradTree.zeroGrad();
+	}
+	
 	protected void addToTree(GradTree tree) {
 		if (tree != None) {
 			_gradTree = tree;
@@ -33,6 +42,8 @@ public class Variable {
 
 		}
 	}
+
+
 }
 /*
  * Variable.java

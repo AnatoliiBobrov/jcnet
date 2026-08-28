@@ -1,4 +1,8 @@
 package jcnet;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Module {
     
 
@@ -6,11 +10,11 @@ public class Module {
         return ;
     }
 
-	public Variable[] calculate() {
+	public List<Variable> calculate() {
         return None;
     }
 
-	public Variable[] parameters() {
+	public List<Variable> parameters() {
         return None;
     }
 }

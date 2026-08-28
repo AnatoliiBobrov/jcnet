@@ -1,27 +1,38 @@
 package jcnet;
-public class Variable{
+public class Variable {
     private float _value;
 	private float _gradiend;
 	private int _generation;
+	private GradTree _gradTree;
 
-	public float value(){
+	public float value() {
 		return _value;
 	}
 
-    public void backward(){
+    public void backward() {
         return ;
     }
 
-	public int generation(){
+	public int generation() {
 		return _generation;	
 	}
 
-	public void zeroGrad(){
+	public void zeroGrad() {
 		_gradiend = 0;
 		_value = 0;
 		_generation = -1;
+		_gradTree = None;
 	}
-	
+
+	protected void addToTree(GradTree tree) {
+		if (tree != None) {
+			_gradTree = tree;
+			tree.add(this);
+		}
+		else {
+
+		}
+	}
 }
 /*
  * Variable.java

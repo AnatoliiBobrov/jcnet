@@ -1,16 +1,16 @@
 package jcnet;
-public class Module{
+public class Module {
     
 
-    public void backward(){
+    public void backward() {
         return ;
     }
 
-	public Variable[] calculate(){
+	public Variable[] calculate() {
         return None;
     }
 
-	public Variable[] parameters(){
+	public Variable[] parameters() {
         return None;
     }
 }

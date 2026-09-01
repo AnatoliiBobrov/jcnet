@@ -1,26 +1,11 @@
 package jcnet;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Module {
-    
+public abstract class Module {
 
-    public void backward() {
-        return ;
-    }
+	public abstract List<Variable> calculate();
 
-	public List<Variable> calculate() {
-        return None;
-    }
+	public abstract List<Variable> parameters();
 
-	public List<Variable> parameters() {
-        return None;
-    }
 }
-/*
- * Module.java
-	backward()
-	calculate()
-	parameters
- */

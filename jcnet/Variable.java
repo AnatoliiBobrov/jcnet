@@ -1,20 +1,26 @@
 package jcnet;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Variable {
     private float _value;
 	private float _gradiend;
 	private int _generation;
 	private GradTree _gradTree;
 
-	public float value() {
+	public Variable(float value) {
+		_value = value;
+	}
+
+	public float getValue() {
 		return _value;
 	}
 
+
+	protected void backwardFromTree() {
+		//Сюда напиши код обратного распространения ошибки
+	}
+
     public void backward() {
-        return ;
+        _gradTree.backward();
     }
 
 	public int generation() {
@@ -25,7 +31,7 @@ public class Variable {
 		_gradiend = 0;
 		_value = 0;
 		_generation = -1;
-		_gradTree = None;
+		_gradTree = null;
 	}
 
 
@@ -34,7 +40,7 @@ public class Variable {
 	}
 	
 	protected void addToTree(GradTree tree) {
-		if (tree != None) {
+		if (tree != null) {
 			_gradTree = tree;
 			tree.add(this);
 		}

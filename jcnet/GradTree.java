@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GradTree {
+	
     private List<Variable> _variables;
 
 	protected GradTree() {
@@ -18,14 +19,13 @@ public class GradTree {
 		for (Variable variable : _variables) {
 			variable.zeroGradFromTree();
 			}
-		}
 	}
+	
 
 	protected void backward() {
 		for (Variable variable : _variables.reversed()) {
-			variable.backward();
+			variable.backwardFromTree();
 			}
-		}
 	}
 }
 /*

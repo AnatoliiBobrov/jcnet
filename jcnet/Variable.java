@@ -1,10 +1,12 @@
 package jcnet;
 
+import jcnet.backwardfunctions.BackwardFunction;
 public class Variable {
-    private float _value;
-	private float _gradiend;
+    protected float _value;
+	protected float _error;
 	private int _generation;
 	private GradTree _gradTree;
+	protected BackwardFunction _backwardFunction;
 
 	public Variable(float value) {
 		_value = value;
@@ -16,7 +18,7 @@ public class Variable {
 
 
 	protected void backwardFromTree() {
-		//Сюда напиши код обратного распространения ошибки
+		_backwardFunction.backward(_error);
 	}
 
     public void backward() {
@@ -28,7 +30,7 @@ public class Variable {
 	}
 
 	protected void zeroGradFromTree() {
-		_gradiend = 0;
+		_error = 0;
 		_value = 0;
 		_generation = -1;
 		_gradTree = null;
@@ -45,11 +47,13 @@ public class Variable {
 			tree.add(this);
 		}
 		else {
-
+			// что-то здесь надо прописать, так не пойдет
 		}
 	}
 
-
+	public String toString() {
+		return Float.toString(_value);
+	}
 }
 /*
  * Variable.java

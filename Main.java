@@ -1,8 +1,14 @@
-import java.io.File;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import jcnet.Variable;
 public class Main {
+    
     public static void main(String[] args) {
-        File file = new File("index.html");
-        }
+        Variable[] ara11 = new Variable[]{new Variable(3F), new Variable(5F)};
+        var araL = new ArrayList<Variable>(Arrays.asList(ara11));
+        ara11[0]._value = 66F;
+        IO.println(araL);
+        
     }
 }

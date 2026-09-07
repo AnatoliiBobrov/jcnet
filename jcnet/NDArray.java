@@ -26,6 +26,9 @@ public class NDArray {
 		_shape = size;
 	}
 
+	public int[] getShape() {
+		return _shape.clone();
+	}
 
 	public NDArray(int... size) throws IllegalArgumentException {
 		_NDArray(size);
@@ -35,7 +38,7 @@ public class NDArray {
 		}
 	}
 
-	public static NDArray NDArrayFrom1D(int[] values) 
+	public static NDArray NDArrayFrom1D(double [] values) 
 	throws IllegalArgumentException {
 		// надо унифицировать до произвольной размерности
 		var res = new NDArray(values.length);
@@ -45,7 +48,7 @@ public class NDArray {
 		return res;
 	}
 
-	public static NDArray NDArrayFrom2D(int[][] values) 
+	public static NDArray NDArrayFrom2D(double[][] values) 
 	throws IllegalArgumentException {
 		// надо унифицировать до произвольной размерности
 		if (values.length == 0) {
@@ -61,8 +64,8 @@ public class NDArray {
 		}
 		var res = new NDArray(values.length, values[0].length);
 		int pointer = 0;
-		for (int[] x0 : values) {
-			for (int x1 : x0) {
+		for (double[] x0 : values) {
+			for (double x1 : x0) {
 				res._values[pointer].value = x1;
 				pointer ++;
 			}
@@ -141,8 +144,43 @@ public class NDArray {
 
 	// Скрой от глаз юзверя, это на новый год
 	// кстати, эта штука сильно мусорит, можно ли что-то с этим сделать?
-	public NDArray _matmul(NDArray other) {
-		int a1, b1, b2;
+	public NDArray matmul(NDArray other) throws IllegalArgumentException{
+		int a1, b1, a2, b2;
+		// shape compatibility checking
+		b1 = _shape[_shape.length - 1];
+		b2 = other._shape[other._shape.length - 1];
+		if (_shape.length == 1) {
+			a1 = 1;
+			if (other._shape.length == 1) {
+				a2 = 1;
+			}
+			else {
+				a2 = other._shape[other._shape.length - 2];
+				if (a2 == b1) {
+					throw new IllegalArgumentException(
+					"Incompatible shape of NDArray");
+				}
+			}
+		}
+		else {
+			a1 = _shape[_shape.length - 2];
+			if (other._shape.length == 1) {
+				a2 = 1;
+			}
+			else {
+				a2 = other._shape[other._shape.length - 2];
+				if (a2 == b1) {
+				}
+				else {
+					throw new IllegalArgumentException(
+					"Shape of valArray must be [1]");
+				}
+			}
+		}
+
+
+		
+
 		a1 = this._shape[this._shape.length - 2];
 		b1 = this._shape[this._shape.length - 1];
 		b2 = other._shape[other._shape.length - 1];

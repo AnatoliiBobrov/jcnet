@@ -11,6 +11,5 @@ public class Functions {
 		res._backwardFunction = new ScalarBackward(input1, input2);
 		return res;
 	}
-	
 
 }

@@ -2,17 +2,17 @@ package jcnet;
 
 import jcnet.backwardfunctions.BackwardFunction;
 public class Variable {
-    public float value;
-	public float error;
+    public double value;
+	public double error;
 	private int _generation;
 	private GradTree _gradTree;
 	protected BackwardFunction _backwardFunction;
 
-	public Variable(float value) {
+	public Variable(double value) {
 		this.value = value;
 	}
 
-	public float getValue() {
+	public double getValue() {
 		return this.value;
 	}
 
@@ -52,7 +52,7 @@ public class Variable {
 	}
 
 	public String toString() {
-		return Float.toString(value);
+		return Double.toString(value);
 	}
 }
 /*

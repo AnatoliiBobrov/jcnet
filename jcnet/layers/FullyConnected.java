@@ -4,12 +4,12 @@ import java.util.List;
 import jcnet.NDArray;
 import jcnet.Variable;
 
-public class FullуConnected extends jcnet.Module {
+public class FullyConnected extends jcnet.Module {
 	private NDArray _params;
 	private int _inps;
 	private int _outs;
 	
-	public FullуConnected(int inps, int outs) throws IllegalArgumentException{
+	public FullyConnected(int inps, int outs) throws IllegalArgumentException{
 		if (inps < 1) {
 			throw new IllegalArgumentException("inps must be grater than 0");
 		}

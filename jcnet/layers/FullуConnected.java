@@ -9,6 +9,7 @@ public class FullуConnected extends jcnet.Module {
 
 	@Override
 	public NDArray calculate(NDArray input)  throws Exception {
+		// здесь нужно тело функции
 		return null;
 	}
 

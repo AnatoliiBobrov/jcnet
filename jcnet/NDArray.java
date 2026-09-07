@@ -40,7 +40,7 @@ public class NDArray {
 		// надо унифицировать до произвольной размерности
 		var res = new NDArray(values.length);
 		for (int x0 = 0; x0 < values.length; x0++) {
-			res._values[x0]._value = values[x0];
+			res._values[x0].value = values[x0];
 		}
 		return res;
 	}
@@ -57,12 +57,13 @@ public class NDArray {
 				throw new IllegalArgumentException("Input array shape must be greater "+
 				"than 0, input size: [" + Integer.toString(values.length) + 
 				", 0]");
+			}
 		}
 		var res = new NDArray(values.length, values[0].length);
 		int pointer = 0;
 		for (int[] x0 : values) {
 			for (int x1 : x0) {
-				res._values[pointer]._value = x1;
+				res._values[pointer].value = x1;
 				pointer ++;
 			}
 		}

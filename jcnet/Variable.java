@@ -2,23 +2,23 @@ package jcnet;
 
 import jcnet.backwardfunctions.BackwardFunction;
 public class Variable {
-    protected float _value;
-	protected float _error;
+    public float value;
+	public float error;
 	private int _generation;
 	private GradTree _gradTree;
 	protected BackwardFunction _backwardFunction;
 
 	public Variable(float value) {
-		_value = value;
+		this.value = value;
 	}
 
 	public float getValue() {
-		return _value;
+		return this.value;
 	}
 
 
 	protected void backwardFromTree() {
-		_backwardFunction.backward(_error);
+		_backwardFunction.backward(error);
 	}
 
     public void backward() {
@@ -30,8 +30,8 @@ public class Variable {
 	}
 
 	protected void zeroGradFromTree() {
-		_error = 0;
-		_value = 0;
+		error = 0;
+		value = 0;
 		_generation = -1;
 		_gradTree = null;
 	}
@@ -52,7 +52,7 @@ public class Variable {
 	}
 
 	public String toString() {
-		return Float.toString(_value);
+		return Float.toString(value);
 	}
 }
 /*

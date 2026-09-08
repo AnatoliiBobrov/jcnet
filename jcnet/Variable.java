@@ -51,6 +51,7 @@ public class Variable {
 		}
 	}
 
+	@Override
 	public String toString() {
 		return Double.toString(value);
 	}

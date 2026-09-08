@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Net extends Module{
-    private List<Module> _layers;
+    private final List<Module> _layers;
 	
 	/**
 	 * Create Net from list of layers (by reference)
@@ -17,7 +17,7 @@ public class Net extends Module{
 
 	@Override
 	public List<Variable> parameters() {
-		List<Variable> _params = new ArrayList<Variable>();
+		List<Variable> _params = new ArrayList<>();
 		for (Module layer : _layers) {
 			_params.addAll(layer.parameters());
 		}

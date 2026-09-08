@@ -6,7 +6,7 @@ import jcnet.Variable;
 
 public class FullyConnected extends jcnet.Module {
 	private NDArray _params;
-	
+
 	private int _inps;
 	private int _outs;
 	
@@ -35,37 +35,23 @@ public class FullyConnected extends jcnet.Module {
 	@Override
 	public NDArray calculate(NDArray input) throws IllegalArgumentException{
 		var inpShape = input.getShape();
-		int batches = 0;
 		if (inpShape.length > 2) {
 			throw new IllegalArgumentException("input shape mush be [" + _inps +
 			"] or [batch, " + _inps + "]");
 		}
 		if (inpShape.length == 2) {
-			batches = inpShape[0];
 			if (inpShape[1] != _inps) {
 				throw new IllegalArgumentException("input shape mush be [" + 
 				inpShape[0] + ", " + _inps + "]");
 			}
-		}
-		else {
+		} else {
 			if (inpShape[0] != _inps) {
 				throw new IllegalArgumentException("input shape mush be [" + 
 				_inps + "]");
 			}
 		}
-
-		for (int batch = 0; batch < batches; batch ++) {
-			var inpRow = new Variable[_inps];
-			
-			for (int x = 0; x < _inps; x++) {
-				for (int y = 0; y < _outs; y ++) {
-					for (int z = 0; z < _outs; z++) {
-
-					}
-				}
-			}
-		}
-		return null;
+		
+		return input.matmul(input);
 	}
 
 	@Override

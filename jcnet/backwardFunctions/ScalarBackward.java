@@ -3,8 +3,8 @@ package jcnet.backwardfunctions;
 import java.util.Objects;
 import jcnet.Variable;
 public class ScalarBackward extends BackwardFunction {
-	private Variable[] _input1;
-	private Variable[] _input2;
+	private final Variable[] _input1;
+	private final Variable[] _input2;
 
 	public ScalarBackward (Variable[] input1, Variable[] input2) 
 	throws IllegalArgumentException, NullPointerException{
@@ -18,7 +18,7 @@ public class ScalarBackward extends BackwardFunction {
 	}
 
 	@Override
-	public void backward(float error) {
+	public void backward(double  error) {
 		for (int i = 0; i < _input1.length; i++) {
 			_input1[i].error += _input2[i].value * error;
 			_input2[i].error += _input1[i].value * error;

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class GradTree {
 	
-    private List<Variable> _variables;
+    private final List<Variable> _variables;
 
 	protected GradTree() {
 		_variables = new ArrayList<>();

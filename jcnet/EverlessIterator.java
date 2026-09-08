@@ -4,8 +4,8 @@ import java.util.Iterator;
 
 public class EverlessIterator implements Iterator<Variable[]>{
     private int _pointer;
-	private int _last;
-	private Variable[][] _values; 
+	private final int _last;
+	private final Variable[][] _values; 
 
 	// column = true if iteration of columns, else rows
 	public EverlessIterator(Variable[] values, int rows, int colunms, boolean column) {
@@ -14,9 +14,9 @@ public class EverlessIterator implements Iterator<Variable[]>{
 		_last = length - 1;
 		var _valuesPointer = 0;
 		var pointer = 0;
-		var pointer2 = 0;
-		var pointer3 = 0;
+		
 		if (column) {
+			int pointer2, pointer3;
 			var size_2 = rows * colunms;
 			for (int p = 0; p < length; p += colunms) {
 				pointer2 = pointer;

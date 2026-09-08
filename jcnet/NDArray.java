@@ -8,6 +8,8 @@ public class NDArray {
 	private int[] _shape;
 	private int[] _capacity;
 	private int _length;
+	private EverlessIterator _columnIterator;
+	private EverlessIterator _rowIterator;
 
 	private void _NDArray(int... size) throws IllegalArgumentException {
 		// Нужно установить вехний порог размеров массива
@@ -54,8 +56,7 @@ public class NDArray {
 		if (values.length == 0) {
 			throw new IllegalArgumentException("shape must be greater " +
 				"than 0, input size: [0, 0]");
-		}
-		else {
+		} else {
 			if (values[0].length == 0) {
 				throw new IllegalArgumentException("Input array shape must be greater "+
 				"than 0, input size: [" + Integer.toString(values.length) + 
@@ -81,7 +82,7 @@ public class NDArray {
 			"than 0, input size: " + Arrays.toString(size));
 		}
 
-		_values = values;
+		_values = values.clone();
 	}
 
 	private int _getFlatAtCoords(int... coords) 
@@ -92,7 +93,6 @@ public class NDArray {
 			"count of coordinates as in Shape of this NDArray");
 		}
 		for (int i = 0; i < coords.length; i++) {
-			int newCoord = 0;
 			if (coords[i] >= _shape[i])	{
 				throw new IllegalArgumentException("coords out of range: " +
 				Arrays.toString(coords) + " shape:" + Arrays.toString(_shape));
@@ -134,9 +134,10 @@ public class NDArray {
 	}
 
 	public List<Variable> toFlatList(){
-		return new ArrayList<Variable>(Arrays.asList(_values));
+		return new ArrayList<>(Arrays.asList(_values));
 	}
 
+	@Override
 	public String toString() {
 		// Здесь напиши хороший код для строкового представления массива
 		return "";
@@ -146,6 +147,8 @@ public class NDArray {
 	// кстати, эта штука сильно мусорит, можно ли что-то с этим сделать?
 	public NDArray matmul(NDArray other) throws IllegalArgumentException{
 		int a1, b1, a2, b2;
+		int[] outputShape = new int[Math.max(2, 
+			Math.max(_shape.length, other._shape.length))];
 		// shape compatibility checking
 		b1 = _shape[_shape.length - 1];
 		b2 = other._shape[other._shape.length - 1];
@@ -153,39 +156,68 @@ public class NDArray {
 			a1 = 1;
 			if (other._shape.length == 1) {
 				a2 = 1;
-			}
-			else {
+			} else {
 				a2 = other._shape[other._shape.length - 2];
-				if (a2 == b1) {
-					throw new IllegalArgumentException(
-					"Incompatible shape of NDArray");
-				}
 			}
 		}
 		else {
 			a1 = _shape[_shape.length - 2];
 			if (other._shape.length == 1) {
 				a2 = 1;
-			}
-			else {
+				outputShape = _shape.clone();
+			} else {
 				a2 = other._shape[other._shape.length - 2];
-				if (a2 == b1) {
-				}
-				else {
-					throw new IllegalArgumentException(
-					"Shape of valArray must be [1]");
-				}
 			}
 		}
-
-
+		if (a2 != b1) {
+			throw new IllegalArgumentException(
+				"Incompatible shape of NDArray");
+		}
+		outputShape[outputShape.length - 1] = a1;
+		outputShape[outputShape.length - 2] = b2;
+		int[] largest, shortest;
+		if (_shape.length > other._shape.length) {
+			largest = _shape;
+			shortest = other._shape;
+		} else {
+			largest = other._shape;
+			shortest = _shape;
+		}
 		
+		var count = outputShape[outputShape.length - 1] * 
+			outputShape[outputShape.length - 2];
+		for (int i = largest.length - 3; i > -1; i--) {
+			if (i < shortest.length) {
+				if (shortest[i] == 1 || shortest[i] == largest[i]) {
+					outputShape[i] = largest[i];
+				} else {
+					throw new IllegalArgumentException(
+						"Incompatible shape of NDArray");
+				}
+			} else {
+				outputShape[i] = largest[i];
+			}
+		}
+		
+		if (_rowIterator == null) {
+			_rowIterator = new EverlessIterator(_values, a1, b1, false);
+		}
+		if (other._columnIterator == null) {
+			other._columnIterator = new EverlessIterator(other._values, a2, b2,
+				true);
+		}
 
-		a1 = this._shape[this._shape.length - 2];
-		b1 = this._shape[this._shape.length - 1];
-		b2 = other._shape[other._shape.length - 1];
-		var res = new Variable[a1 * b2];
-		return null;
+		var content = new Variable[count];
+		try {
+			for (int i = 0; i < count; i++) {
+			content[i] = Functions._scalar(_rowIterator.next(), 
+				other._columnIterator.next());
+		}
+		} catch (Exception e) {
+		}
+		
+		var res = new NDArray(content, outputShape);
+		return res;
 	}
 }
 

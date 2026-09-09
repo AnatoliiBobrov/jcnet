@@ -1,5 +1,3 @@
-package test.jcnet;
-
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,19 +5,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import jcnet.Variable;
 public class VariableTest {
 
-	private final Variable variable = new Variable(1.0);
-
 	@Test
 	public void isValueInConstructorGood() {
 		double val_1 = 4.0;
 		assertEquals(val_1, (new Variable(val_1)).getValue, 
-			"Value in variable must be " + double.toString(val_1));
+			"Value in variable must be " + Double.toString(val_1));
 
 		assertEquals((double(-1)), (new Variable(-1)).getValue, 
-			"Value in variable must be " + double.toString(double(-1)));
+			"Value in variable must be " + Double.toString(double(-1)));
 
 		assertEquals((double(-1f)), (new Variable(-1f)).getValue, 
-			"Value in variable must be " + double.toString(double(-1f)));
+			"Value in variable must be " + Double.toString(double(-1f)));
 	}
 	/*
 	@Test

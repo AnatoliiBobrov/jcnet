@@ -1,8 +1,7 @@
-package jcnet;
+package jcnettest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 
 import jcnet.Variable;
 public class VariableTest {
@@ -10,21 +9,31 @@ public class VariableTest {
 	@Test
 	public void isValueInConstructorGood() {
 		double val_1 = 4.0;
-		assertEquals(val_1, (new Variable(val_1)).getValue, 
+		assertEquals(val_1, (new Variable(val_1)).getValue(), 
 			"Value in variable must be " + Double.toString(val_1));
 
-		assertEquals((double(-1)), (new Variable(-1)).getValue, 
-			"Value in variable must be " + Double.toString(double(-1)));
+		assertEquals((double)-1, (new Variable(-1)).getValue(), 
+			"Value in variable must be " + Double.toString((double)-1));
 
-		assertEquals((double(-1f)), (new Variable(-1f)).getValue, 
-			"Value in variable must be " + Double.toString(double(-1f)));
+		assertEquals((double)-1f, (new Variable(-1f)).getValue(), 
+			"Value in variable must be " + Double.toString((double)-1f));
 	}
-	/*
+
+
 	@Test
-	public double getValue() {
-		return this.value;
-	}
+	public void getValue() {
+		double val_1 = 4.0;
+		assertEquals(val_1, (new Variable(val_1)).getValue(), 
+			"Value in variable must be " + Double.toString(val_1));
 
+		assertEquals((double)-1, (new Variable(-1)).getValue(), 
+			"Value in variable must be " + Double.toString((double)-1));
+
+		assertEquals((double)-1f, (new Variable(-1f)).getValue(), 
+			"Value in variable must be " + Double.toString((double)-1f));
+	}
+	
+    /*
 	@Test
 	protected void backwardFromTree() {
 		_backwardFunction.backward(error);

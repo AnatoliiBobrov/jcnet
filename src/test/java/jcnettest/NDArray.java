@@ -1,15 +1,11 @@
-package jcnet;
+package jcnettest;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class NDArray {
-    protected Variable[] _values;
-	private int[] _shape;
-	private int[] _capacity;
-	private int _length;
-	private EverlessIterator _columnIterator;
-	private EverlessIterator _rowIterator;
+public class NDArrayTest {
+	/*
 
 	private void _NDArray(int... size) throws IllegalArgumentException {
 		// Нужно установить вехний порог размеров массива
@@ -219,5 +215,6 @@ public class NDArray {
 		var res = new NDArray(content, outputShape);
 		return res;
 	}
+	*/
 }
 

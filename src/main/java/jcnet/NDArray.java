@@ -3,6 +3,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Basic calculating element in this module.
+ */
 public class NDArray {
     protected Variable[] _values;
 	private int[] _shape;
@@ -28,11 +31,24 @@ public class NDArray {
 		_shape = size;
 	}
 
+	/**
+	 * Returns shape of NDArray
+	 * @return Shape of NDArray
+	 */
 	public int[] getShape() {
 		return _shape.clone();
 	}
 
-	public NDArray(int... size) throws IllegalArgumentException {
+	/**
+	 * Returns shape of NDArray
+	 * 
+	 * @throws IllegalArgumentException <p>If array "size" is null or 
+	 * contains values less than 1</p>
+	 * @throws OutOfMemoryError <p>If count of element in is too large. </p>
+	 * @return <p>Shape of NDArray</p>
+	 */
+	public NDArray(int... size) 
+	throws IllegalArgumentException, OutOfMemoryError {
 		_NDArray(size);
 		_values = new Variable[_length];
 		for (int i = 0; i < _length; i++) {
@@ -40,9 +56,18 @@ public class NDArray {
 		}
 	}
 
+	/**
+	 * Returns new instance of 1D-NDArray with values in array
+	 * @param values values of 1D-NDarray
+	 * @throws IllegalArgumentException <p>If values is empty</p> 
+	 * @return <p>1D-NDArray</p>
+	 */
 	public static NDArray NDArrayFrom1D(double [] values) 
 	throws IllegalArgumentException {
 		// надо унифицировать до произвольной размерности
+		if (values.length == 0) {
+			throw new IllegalArgumentException("values must not be empty");
+		}
 		var res = new NDArray(values.length);
 		for (int x0 = 0; x0 < values.length; x0++) {
 			res._values[x0].value = values[x0];
@@ -50,6 +75,12 @@ public class NDArray {
 		return res;
 	}
 
+	/**
+	 * Returns new instance of 2D-NDArray with values in array
+	 * @param values values of 2D-NDarray
+	 * @throws IllegalArgumentException <p>If values is empty</p> 
+	 * @return <p>2D-NDArray</p>
+	 */
 	public static NDArray NDArrayFrom2D(double[][] values) 
 	throws IllegalArgumentException {
 		// надо унифицировать до произвольной размерности
@@ -102,6 +133,12 @@ public class NDArray {
 		return fCoords;
 	}
 
+	/**
+	 * Returns item from position "coords"
+	 * @param coords position of target value
+	 * @throws IllegalArgumentException <p>if "coords" out of bounds</p>
+	 * @return <p>1D-NDArray with shape [1]</p>
+	 */
 	public NDArray get(int... coords) throws IllegalArgumentException {
 		var fCoords = _getFlatAtCoords(coords);
 		return new NDArray(new Variable[]{_values[fCoords]}, 1);
@@ -130,7 +167,9 @@ public class NDArray {
 			throw new IllegalArgumentException(
 				"Shape of valArray must be [1]");
 		}
+		// здесь передача значение, а нужно ссылку?
 		_values[fCoords] = valArray._values[0];
+		
 	}
 
 	public List<Variable> toFlatList(){
@@ -143,9 +182,16 @@ public class NDArray {
 		return "";
 	}
 
-	// Скрой от глаз юзверя, это на новый год
-	// кстати, эта штука сильно мусорит, можно ли что-то с этим сделать?
+	/**
+	 * Returns mathematical multiply (matmul) of this NDArray with other. If shapes
+	 * are different, batch multiply is applied
+	 * @param other right multiplier
+	 * @throws IllegalArgumentException <p>if both NDArrays have incompatible
+	 * chapes</p>
+	 * @return <p>result of matmul</p>
+	 */
 	public NDArray matmul(NDArray other) throws IllegalArgumentException{
+		// кстати, эта штука сильно мусорит, можно ли что-то с этим сделать?
 		int a1, b1, a2, b2;
 		int[] outputShape = new int[Math.max(2, 
 			Math.max(_shape.length, other._shape.length))];

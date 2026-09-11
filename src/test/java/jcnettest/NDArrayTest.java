@@ -1,27 +1,19 @@
 package jcnettest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class NDArrayTest {
+
+
 	/*
 
 	private void _NDArray(int... size) throws IllegalArgumentException {
-		// Нужно установить вехний порог размеров массива
 		
-	 	_length = 1;
-		_capacity = new int[size.length];// Нужно проверить, не вводится ли 
-										 // пустой массив
-		for (int i = size.length - 1; i > -1; i--){
-			_capacity[i] = _length;
-			if (size[i] < 1) {
-				throw new IllegalArgumentException("shape must be greater " +
-				"than 0, input size: " + Arrays.toString(size));
-			}
-			_length *= size[i];
-		}
-		_shape = size;
 	}
 
 	public int[] getShape() {

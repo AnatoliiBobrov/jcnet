@@ -33,6 +33,14 @@ public class VariableTest {
 			"Value in variable must be " + Double.toString((double)-1f));
 	}
 	
+	@Test
+	public void toStringTest() {
+		double val_1 = 1.0 / 3.0;
+		String target = "Variable(" + Double.toString(val_1) + ")";
+		Variable result = new Variable(val_1);
+		assertEquals(target, result, "Result must be " + target);
+	}
+
     /*
 	@Test
 	protected void backwardFromTree() {
@@ -68,11 +76,6 @@ public class VariableTest {
 		else {
 			// что-то здесь надо прописать, так не пойдет
 		}
-	}
-
-	@Test
-	public String toString() {
-		return Double.toString(value);
 	}
 	*/
 }

@@ -1,42 +1,112 @@
 package jcnettest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import jcnet.NDArray;
 public class NDArrayTest {
+	
+	@Test
+	public void getShapeTest() {
+		var rowValues_2 = new double[][]{
+			new double[]{2.0, 4.0}, 
+			new double[]{3.0, 5.0}};
+		var guineaPig_2 = NDArray.NDArrayFrom2D(rowValues_2);
+		var actual_2 = guineaPig_2.getShape();
+		var expected_2 = new int[]{2,2};
+		assertEquals(expected_2, actual_2);
+	}
+	
+	@Test
+	public void NDArray_IntArray_Size_Empty_Array_Throws_IAE_test() {
+		var emptyArr = new int[0];
+		IllegalArgumentException e = assertThrows(
+			IllegalArgumentException.class, 
+			() -> new NDArray(emptyArr));
+		assertTrue(e.getMessage().contains("size must not be empty"));
+	}
 
+	@Test
+	public void NDArray_IntArray_Size_Array_Has_Zero_test() {
+		var hasZeroArr = new int[]{0, 0};
+		IllegalArgumentException e = assertThrows(
+			IllegalArgumentException.class, 
+			() -> new NDArray(hasZeroArr));
+		assertTrue(e.getMessage().contains("shape must be greater than 0," +
+				" input size: [0, 0]"));
+	}
 
-	/*
+	@Test
+	public void NDArray_IntArray_Size_Array_Has_Zero_Throws_IAE_test() {
+		var hasZeroArr = new int[]{0, 0};
+		IllegalArgumentException e = assertThrows(
+			IllegalArgumentException.class, 
+			() -> new NDArray(hasZeroArr));
+		assertTrue(e.getMessage().contains("shape must be greater than 0," +
+				" input size: [0, 0]"));
+	}
+	
+	@Test
+	public void NDArrayFrom1D_Regular_Value_test() {
+		var rowValues = new double[]{2.0, 4.0};
+		var guineaPig = NDArray.NDArrayFrom1D(rowValues);
+		var actual = guineaPig.getShape();
+		var expected = new int[]{2};
+		assertEquals(expected, actual);
+	}
 
-	private void _NDArray(int... size) throws IllegalArgumentException {
+	@Test
+	public void NDArrayFrom1D_Empty_Value_Throws_IAE_test() {
+		var emptyArray = new double[0];
+		IllegalArgumentException e = assertThrows(
+			IllegalArgumentException.class, 
+			() -> NDArray.NDArrayFrom1D(emptyArray));
+		assertTrue(e.getMessage().contains("values must not be empty"));
+	}
+
+	@Test
+	public void NDArrayFrom2D_Empty_First_Dimension_Throws_IAE_test() {
+		var emptyFirstD = new double[0][];
+		IllegalArgumentException e = assertThrows(
+			IllegalArgumentException.class, 
+			() -> NDArray.NDArrayFrom2D(emptyFirstD));
+		assertTrue(e.getMessage().contains("shape must be greater than 0, " +
+			"input size: [0, 0]"));
+	}
+
+	@Test
+	public void NDArrayFrom2D_Empty_Second_Dimension_Throws_IAE_test() {
+		var emptySecondD = new double[][]{new double[0], new double[]{1, 2}};
+		IllegalArgumentException e = assertThrows(
+			IllegalArgumentException.class, 
+			() -> NDArray.NDArrayFrom2D(emptySecondD));
+		assertTrue(e.getMessage().contains("Input array shape must be " +
+			"greater than 0, input size: [1, 0]"));
+	}
+
+	@Test
+	public void NDArrayFrom2D_Jagged_Values_IAE_test() {
+		var emptySecondD = new double[][]{new double[]{1, 2}, new double[0]};
+		IllegalArgumentException e = assertThrows(
+			IllegalArgumentException.class, 
+			() -> NDArray.NDArrayFrom2D(emptySecondD));
+		assertTrue(e.getMessage().contains("Input array must not be jagged"));
+	}
+	
+	@Test
+	public void NDArrayFrom2D_Regular_Values_test() {
+		var value2d = new double[][]{
+			new double[]{1, 2}, 
+			new double[]{3, 5}};
+		var twoDArray = NDArray.NDArrayFrom2D(value2d);
 		
 	}
+	/*
+	
 
-	public int[] getShape() {
-		return _shape.clone();
-	}
-
-	public NDArray(int... size) throws IllegalArgumentException {
-		_NDArray(size);
-		_values = new Variable[_length];
-		for (int i = 0; i < _length; i++) {
-			_values[i] = new Variable(0F);
-		}
-	}
-
-	public static NDArray NDArrayFrom1D(double [] values) 
-	throws IllegalArgumentException {
-		// надо унифицировать до произвольной размерности
-		var res = new NDArray(values.length);
-		for (int x0 = 0; x0 < values.length; x0++) {
-			res._values[x0].value = values[x0];
-		}
-		return res;
-	}
+	
 
 	public static NDArray NDArrayFrom2D(double[][] values) 
 	throws IllegalArgumentException {

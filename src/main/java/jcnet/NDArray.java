@@ -18,6 +18,9 @@ public class NDArray {
 		// Нужно установить вехний порог размеров массива
 		
 	 	_length = 1;
+		if (size.length < 1) {
+			throw new IllegalArgumentException("size must not be empty");
+		}
 		_capacity = new int[size.length];// Нужно проверить, не вводится ли 
 										 // пустой массив
 		for (int i = size.length - 1; i > -1; i--){
@@ -83,18 +86,29 @@ public class NDArray {
 	 */
 	public static NDArray NDArrayFrom2D(double[][] values) 
 	throws IllegalArgumentException {
+		int[] valuesShape = new int[2];
 		// надо унифицировать до произвольной размерности
 		if (values.length == 0) {
 			throw new IllegalArgumentException("shape must be greater " +
 				"than 0, input size: [0, 0]");
 		} else {
-			if (values[0].length == 0) {
-				throw new IllegalArgumentException("Input array shape must be greater "+
-				"than 0, input size: [" + Integer.toString(values.length) + 
-				", 0]");
+			valuesShape[0] = values.length;
+			valuesShape[1] = values[0].length;
+			if (valuesShape[1] == 0) {
+				throw new IllegalArgumentException("Input array shape must " +
+				"be greater than 0, input size: [" +
+				Integer.toString(valuesShape[0]) + ", 0]");
+			}
+			
+			for (int i = 1; i < valuesShape[0]; i ++) {
+				if (values[i].length != valuesShape[0]) {
+					throw new IllegalArgumentException("Input array must not" +
+					" be jagged");
+				}
 			}
 		}
-		var res = new NDArray(values.length, values[0].length);
+		// проверь, что массив был прямоугольным, а не зубчатым
+		var res = new NDArray(valuesShape);
 		int pointer = 0;
 		for (double[] x0 : values) {
 			for (double x1 : x0) {
@@ -116,6 +130,7 @@ public class NDArray {
 		_values = values.clone();
 	}
 
+	
 	private int _getFlatAtCoords(int... coords) 
 	throws IllegalArgumentException {
 		int fCoords = 0;
